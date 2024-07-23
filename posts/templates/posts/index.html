@@ -1,0 +1,61 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Django-Blog</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <header>
+        <a href="" class="logo">Akshay Kumar</a>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'create_project' %}">Create Project</a></li>
+            <li><a href="{% url 'create_task' %}">Create Task</a></li>
+            <li><a href="">Suggestions</a></li>
+        </ul>
+        <div class="bx bx-menu" id="menu-icon"></div>
+    </header>
+
+    <h1 class="text-center mt-5 border-10">Welcome to the <b>Django Real-Time</b> Project</h1>
+
+    <div class="container">
+        <h1>Project List</h1>
+        <a href="{% url 'create_project' %}" class="btn btn-primary">Create Project</a>
+        <a href="{% url 'create_task' %}" class="btn btn-secondary">Create Task</a>
+        <div class="mt-4">
+            {% for project in projects %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <b>{{ project.project_name }}</b>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ project.project_name }}</h5>
+                        <p class="card-text">
+                            Start Date: {{ project.start_date }}<br>
+                            End Date: {{ project.end_date }}
+                        </p>
+                        <h6>Tasks:</h6>
+                        <ul>
+                            {% for task in project.tasks.all %}
+                                <li>
+                                    Task Name: {{ task.task_name }}<br>
+                                    Status: {{ task.status }}<br>
+                                    Due Date: {{ task.due_date }}
+                                </li>
+                            {% empty %}
+                                <li>No tasks available</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No projects available</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
